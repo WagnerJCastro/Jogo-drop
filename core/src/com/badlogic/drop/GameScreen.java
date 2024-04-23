@@ -28,7 +28,6 @@ public class GameScreen implements Screen {
     Array<Rectangle> raindrops;
     long lastDropTime;
     int dropsGathered;
-    long initialDropInterval = 1000000000; // 1 segundo
 
 
     public GameScreen(final Drop game) {
@@ -115,9 +114,7 @@ public class GameScreen implements Screen {
             bucket.x = 800 - 64;
 
         // check if we need to create a new raindrop
-        if (TimeUtils.nanoTime() - lastDropTime > initialDropInterval * Math.pow(0.99, dropsGathered)) {
-            spawnRaindrop();
-        }
+        if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
 
         // move the raindrops, remove any that are beneath the bottom edge of
         // the screen or that hit the bucket. In the later case we increase the
