@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Timer;
 
 public class GameOverScreen implements Screen {
 
@@ -68,7 +69,12 @@ public class GameOverScreen implements Screen {
             camera.unproject(touchPos);
 
             if (menu.contains(touchPos.x, touchPos.y)) {
-                game.setScreen(new MainMenuScreen(game));
+                Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        game.setScreen(new MainMenuScreen(game));
+                    }
+                }, 0.01f); // atraso de 0.01 segundos
             } else if (sair.contains(touchPos.x, touchPos.y)) { // se o jogador tocou no botão de saída
                 Gdx.app.exit(); // saia do jogo
             }
