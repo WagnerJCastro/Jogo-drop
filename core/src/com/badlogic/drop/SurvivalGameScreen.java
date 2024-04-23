@@ -27,6 +27,8 @@ public class SurvivalGameScreen implements Screen {
     Rectangle bucket;
     Array<Rectangle> raindrops;
     long lastDropTime;
+
+
     int dropsGathered;
     long initialDropInterval = 1000000000; // 1 segundo
 
@@ -126,8 +128,10 @@ public class SurvivalGameScreen implements Screen {
         while (iter.hasNext()) {
             Rectangle raindrop = iter.next();
             raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-            if (raindrop.y + 64 < 0)
-                iter.remove();
+            if (raindrop.y + 64 < 0) {
+                game.setScreen(new GameOverScreen(game, dropsGathered)); // se uma gota atingir a parte inferior da tela, mude para a tela de fim de jogo
+                dispose();
+            }
             if (raindrop.overlaps(bucket)) {
                 dropsGathered++;
                 dropSound.play();
